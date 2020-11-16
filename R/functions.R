@@ -16,7 +16,7 @@
 
 user_get_years <- function(){
   # Here, prompt the user to give the year, we want the analysis to begin from
-  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2017")$res)
+  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2014")$res)
   # make a vector containing the years as intergers
   years <- seq(year, 
                as.integer(format(Sys.Date(), "%Y")))
@@ -41,7 +41,7 @@ get_multiple <- function(years_lst){
         "data/realdonaldtrump/",
         yr,
         ".json")
-      url_list <- append(URLS, urls, after = length(URLS))
+      url_list <- append(url_list, urls, after = length(url_list))
     }
     return(url_list)
   }

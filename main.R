@@ -33,7 +33,7 @@ working_dir <- getwd()
 # Install the important packages
 # The required packages
 Packages <- c("rtweet", "tidytext", "stringr", "textdata", "dplyr", "tidyr", 
-              "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr")
+              "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr", "wordcloud")
 
 # install if not already installed
 if (any(!Packages %in% installed.packages())) {
@@ -43,7 +43,7 @@ if (any(!Packages %in% installed.packages())) {
 
 # Load the packages to our current workspace
 pacman::p_load(rtweet, tidytext, stringr, textdata, dplyr, tidyr, ggplot2,
-               jsonlite, svDialogs, plyr)
+               jsonlite, svDialogs, plyr, wordcloud)
 
 # =============================================================================
 #                            /FOLDER MANAGMENT/
@@ -55,7 +55,7 @@ folders_vector <- c("Raw_Data","Clean_Data", "Data_Visualization")
 
 # Make the folders in the folder_vector if they do not already exist
 for(i in 1:length(folders_vector)){ 
-  if(file.exists(folders_vector[i]) == FALSE){
+  if(file.exists(folders_vector[i]) == F){
     dir.create(folders_vector[i])
   } 
 }
@@ -92,7 +92,7 @@ raw_data <- clean_data0(raw_raw)
 # Save this into the raw folder. We won't use this file at all in the analysis,
 # but it will help the user get what's going on,
 write.csv(raw_data, paste(raw_dir,"Trump_twitter_raw.csv", sep = ""), 
-          row.names = FALSE)
+          row.names = F)
 
 # Now we convert into tidy text form. This concept is similar to tidy data.
 # The idea is we want (1) words in rows[we could also have sentences or n-grams]
@@ -101,28 +101,39 @@ write.csv(raw_data, paste(raw_dir,"Trump_twitter_raw.csv", sep = ""),
 # special cleaning process. We have already loaded these.
 
 # First let's extract only the text.
-just_txt <- clean_data(raw_data)
+just_txt <- clean_data1(raw_data)
 
 # Get the stop words data frame into the work space
 data(stop_words)
+
+# Get another list of stop words specific to this analysis
+specific_stopwords <- read.csv(paste(raw_dir, "specific_stopwords.csv", sep = ""))
 
 # Convert to tidy text: one word-per-row
 tidy_txt <- just_txt %>%
   # there is a column called text in tidy_txt
   unnest_tokens(word, text) %>%
   # Now remove the stop words
-  anti_join(stop_words)
+  anti_join(stop_words) %>%
+  #Now remove the specific stop words
+  anti_join(specific_stopwords)
 
 # Get the count of each word
 freq_data <- tidy_txt %>%
   dplyr::count(word, sort = T)
 
+# Sentiment Analysis
+
+# Get the bing sentiment lexicon into the work space
+sent <- get_sentiments("bing")
+
+tidy_txt_sentiment <- tidy_txt %>%
+  inner_join(sent) %>%
+  count(sentiment) %>%
+  spread(word, sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+
 # ================================ END ========================================
-
-
-
-
-
 
 
 
