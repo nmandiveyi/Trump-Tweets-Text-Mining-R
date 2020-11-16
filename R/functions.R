@@ -89,8 +89,16 @@ clean_data0 <- function(input_data){
 clean_data1 <- function(data){
   # extract the text from data
   text = data$text
-  #make a new data frame containing only this column
-  clean_df = data.frame(text) 
+  # Extract the time stamp
+  year = data$created_at
+  #make a new data frame containing only these two column
+  clean_df = data.frame(year, text) 
+  
+  clean_df = clean_df %>%
+    dplyr::mutate(
+      tweet_number = row_number(),
+      year = as.integer(substring(year, 26)))
+  
   return(clean_df)
 }
 
