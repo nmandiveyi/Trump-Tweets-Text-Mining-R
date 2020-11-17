@@ -47,6 +47,6 @@ tidy_text_sentiments <- as_tibble(just_txt) %>%
   #ungroup() %>%
   unnest_tokens(word, text) %>%
   inner_join(sent) %>%
-  dplyr::count(year, index = tweet_number %/% 80, sentiment) %>%
+  dplyr::count(year, index = tweet_number %% 200, sentiment) %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative)

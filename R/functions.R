@@ -16,7 +16,7 @@
 
 user_get_years <- function(){
   # Here, prompt the user to give the year, we want the analysis to begin from
-  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2013")$res)
+  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2013", gui = .GUI)$res)
   # make a vector containing the years as intergers
   years <- seq(year, 
                as.integer(format(Sys.Date(), "%Y")))
@@ -81,7 +81,7 @@ get_web_data <- function(proj_url){
 clean_data0 <- function(input_data){
   # Check if input_data is a list. If so, combine it into a data frame
   if (is.list(input_data)){
-    dt <- lapply(input_data, tibble::as.tibble)
+    dt <- lapply(input_data, tibble::as_tibble)
     dt <- rbind.fill(dt)
   }
   return(dt)
