@@ -15,7 +15,7 @@
 # special cleaning process. We have already loaded these.
 #==============================================================================
 # First let's extract only the text.
-just_txt <- clean_data1(raw_data)
+just_txt <- as_tibble(clean_data1(raw_data))
 
 # Get the stop words data frame into the work space
 data(stop_words)
@@ -83,12 +83,16 @@ post_data$year <- "2017-2020"
 # pre data
 tidy_pre_data <- pre_data %>%
   unnest_tokens(word, text) %>%
-  anti_join(stop_words)
+  anti_join(stop_words) %>%
+  anti_join(specific_stopwords)
+
 
 # post data
 tidy_post_data <- post_data %>%
   unnest_tokens(word, text) %>%
-  anti_join(stop_words)
+  anti_join(stop_words) %>%
+  anti_join(specific_stopwords)
+
 
 
 pre_post_freq <- bind_rows(mutate(tidy_pre_data, year = "2013-2016"),
@@ -97,8 +101,9 @@ pre_post_freq <- bind_rows(mutate(tidy_pre_data, year = "2013-2016"),
   dplyr::count(year, word) %>%
   group_by(year) %>%
   mutate(proportion = n / sum(n)) %>% 
-  select(-n) 
-
+  select(-n) %>%
+  spread(year, proportion) %>% 
+  gather(year, proportion, `2017-2020`)
 
 
 

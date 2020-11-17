@@ -30,10 +30,11 @@ working_dir <- getwd()
 # =============================================================================
 #                                /LIBRARIES/
 
-# Install the important packages
+# Install the important packages if not already installed
 # The required packages
 Packages <- c("rtweet", "tidytext", "stringr", "textdata", "dplyr", "tidyr", 
-              "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr", "wordcloud")
+              "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr", "wordcloud", 
+              "scales", "topicmodels", "reshape2")
 
 # install if not already installed
 if (any(!Packages %in% installed.packages())) {
@@ -43,7 +44,7 @@ if (any(!Packages %in% installed.packages())) {
 
 # Load the packages to our current workspace
 pacman::p_load(rtweet, tidytext, stringr, textdata, dplyr, tidyr, ggplot2,
-               jsonlite, svDialogs, plyr, wordcloud)
+               jsonlite, svDialogs, plyr, wordcloud, scales, topicmodels, reshape2)
 
 # =============================================================================
 #                            /FOLDER MANAGMENT/
@@ -100,6 +101,10 @@ write.csv(raw_data, paste(raw_dir,"Trump_twitter_raw.csv", sep = ""),
 # This is the script that contains the all the data manipulation. Refer 
 # to data_manipulation.R in the R folder.
 source("R/data_manipulation.R")
+
+#This is the script that does all the analysis with the clean data
+# Refer to the R folder
+source("R/analysis.R")
 
 # This is the script that contains the all the data visualization. Refer 
 # to visualization.R in the R folder.

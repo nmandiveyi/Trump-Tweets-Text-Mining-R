@@ -56,6 +56,9 @@ dev.off()
 #==============================================================================
 # Create a plot to compare the use of words pre and post election
 
+pdf(file = paste(results_dir,"prepost_comparison.pdf", sep = ""), width = 8.5, height = 6,
+    title = "Pre post Comarizon")
+
 ggplot(pre_post_freq, aes(x = proportion, y = `2013-2016`, 
                         color = abs(`2013-2016` - proportion))) +
   geom_abline(color = "gray40", lty = 2) +
@@ -64,7 +67,9 @@ ggplot(pre_post_freq, aes(x = proportion, y = `2013-2016`,
   scale_x_log10(labels = percent_format()) +
   scale_y_log10(labels = percent_format()) +
   scale_color_gradient(limits = c(0, 0.001), 
-                       low = "darkslategray4", high = "gray75") +
-  labs(y = "2013-2016", x = NULL)
+                       low = "darkblue", high = "gray75") +
+  theme_light() +
+  labs(y = "2013-2016", x = "2017-2020")
 
 
+dev.off()
