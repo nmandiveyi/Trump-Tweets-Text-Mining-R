@@ -106,7 +106,7 @@ pre_post_freq <- bind_rows(mutate(tidy_pre_data, year = "2013-2016"),
   spread(year, proportion) %>% 
   gather(year, proportion, `2017-2020`)
 
-
+# ================================ END ========================================
 
 
 

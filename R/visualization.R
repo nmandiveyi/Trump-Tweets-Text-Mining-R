@@ -22,7 +22,7 @@ freq_data %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(n, word)) +
   scale_x_continuous(expand = c(0, 0), limits = c(0, NA)) +
-  geom_col(fill = "lightskyblue2", color = "black") +
+  geom_col(fill = "deepskyblue2", color = "black") +
   labs(x = "Count", y = NULL, 
        title = "Most used words in Trump's tweets (2014-2020)") +
   theme_light()
@@ -49,7 +49,7 @@ pdf(file = paste(results_dir,"word_cloud.pdf", sep = ""), width = 10, height = 1
 
 # Plot a word cloud for tidy text
 freq_data %>% 
-  with(wordcloud(word, n, max.words = 500, colors = "lightskyblue"))
+  with(wordcloud(word, n, max.words = 500, colors = "darkslategray4"))
 
 dev.off()
 
@@ -68,10 +68,9 @@ ggplot(pre_post_freq, aes(x = proportion, y = `2013-2016`,
   scale_x_log10(labels = percent_format()) +
   scale_y_log10(labels = percent_format()) +
   scale_color_gradient(limits = c(0, 0.001), 
-                       low = "darkblue", high = "gray75") +
+                       low = "slategray4", high = "snow2") +
   theme_light() +
   labs(y = "2013-2016", x = "2017-2020")
-
 
 dev.off()
 #==============================================================================
@@ -87,3 +86,5 @@ most_frequent %>%
   facet_wrap(~ topic, scales = "free") +
   scale_y_reordered()
 dev.off()
+
+# ================================ END ========================================

@@ -50,14 +50,15 @@ data_lda_method <- LDA(data_doc_term_mtrx, k = 4, control = list(seed = 1234))
 
 model_topics <- tidytext::tidy(data_lda_method, matrix = "beta")
 
-# Cleanup the data frame for visualization
+# Clean up the data frame for visualization
+# Go to visualization.R to see how I plot this data
 most_frequent <- model_topics %>%
   group_by(topic) %>%
   top_n(10, beta) %>%
   ungroup() %>%
   arrange(topic, -beta)
 
-
+# ================================ END ========================================
 
 
 
