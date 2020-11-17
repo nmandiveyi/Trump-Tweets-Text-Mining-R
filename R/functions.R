@@ -24,13 +24,6 @@ user_get_years <- function(){
 }
 
 #==============================================================================
-# Define a function that returns a vector containing urls of interest
-
-# make a vector containing the links for data for each yeari in the vector 
-# years
-
-
-#==============================================================================
 get_multiple <- function(years_lst){
   # define a function that returns a list of urls to the data we want
   make_url <- function(years){
@@ -45,7 +38,7 @@ get_multiple <- function(years_lst){
     }
     return(url_list)
   }
-  # Get the list of urls
+  # Get the list of urls using the list of years
   url_list = make_url(years_lst)
   # Return a list of data frames from each year
   big_data <- lapply(url_list, get_web_data) 

@@ -53,4 +53,18 @@ freq_data %>%
 
 dev.off()
 
+#==============================================================================
+# Create a plot to compare the use of words pre and post election
+
+ggplot(pre_post_freq, aes(x = proportion, y = `2013-2016`, 
+                        color = abs(`2013-2016` - proportion))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5) +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), 
+                       low = "darkslategray4", high = "gray75") +
+  labs(y = "2013-2016", x = NULL)
+
 
