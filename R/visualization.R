@@ -70,6 +70,7 @@ ggplot(pre_post_freq, aes(x = proportion, y = `2013-2016`,
   scale_color_gradient(limits = c(0, 0.001), 
                        low = "slategray4", high = "snow2") +
   theme_light() +
+  theme(legend.title = element_blank())
   labs(y = "2013-2016", x = "2017-2020")
 
 dev.off()
