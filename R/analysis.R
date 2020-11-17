@@ -57,17 +57,7 @@ most_frequent <- model_topics %>%
   ungroup() %>%
   arrange(topic, -beta)
 
-# Let's visualize the most frequent terms
-pdf(file = paste(results_dir,"models.pdf", sep = ""), width = 10, height = 10,
-    title = "Topic Modeling")
 
-most_frequent %>%
-  mutate(term = reorder_within(term, beta, topic)) %>%
-  ggplot(aes(beta, term, fill = factor(topic))) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ topic, scales = "free") +
-  scale_y_reordered()
-dev.off()
 
 
 

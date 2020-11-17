@@ -54,6 +54,7 @@ freq_data %>%
 dev.off()
 
 #==============================================================================
+#                            /PRE-POST COMPARISON/
 # Create a plot to compare the use of words pre and post election
 
 pdf(file = paste(results_dir,"prepost_comparison.pdf", sep = ""), width = 8.5, height = 6,
@@ -72,4 +73,17 @@ ggplot(pre_post_freq, aes(x = proportion, y = `2013-2016`,
   labs(y = "2013-2016", x = "2017-2020")
 
 
+dev.off()
+#==============================================================================
+#                         /MOST FREQUENT IN TOPICS/
+# Let's visualize the most frequent terms
+pdf(file = paste(results_dir,"models.pdf", sep = ""), width = 10, height = 10,
+    title = "Topic Modeling")
+
+most_frequent %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 dev.off()
