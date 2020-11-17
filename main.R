@@ -108,7 +108,7 @@ source("R/analysis.R")
 
 # This is the script that contains the all the data visualization. Refer 
 # to visualization.R in the R folder.
-source("R/visualization.R")
+source("R/visualization.R", echo = T, print.eval = T)
 
 # ================================ END ========================================
 

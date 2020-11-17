@@ -94,7 +94,8 @@ tidy_post_data <- post_data %>%
   anti_join(specific_stopwords)
 
 
-
+# Combine the data into one data frame for us to use ggplot to compare
+# to follow the steps after this, go to visualization.R
 pre_post_freq <- bind_rows(mutate(tidy_pre_data, year = "2013-2016"),
                            mutate(tidy_post_data, year = "2017-2020")) %>% 
   mutate(word = str_extract(word, "[a-z']+")) %>%
