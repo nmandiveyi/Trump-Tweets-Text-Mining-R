@@ -106,6 +106,14 @@ pre_post_freq <- bind_rows(mutate(tidy_pre_data, year = "2013-2016"),
   spread(year, proportion) %>% 
   gather(year, proportion, `2017-2020`)
 
+# Write the clean data on to a csv files
+# pre_post_freq
+write.csv(pre_post_freq, paste(clean_dir,"pre_post_freq.csv", sep = ""), 
+          row.names = F)
+
+# just_txt
+write.csv(just_txt, paste(clean_dir,"just_txt.csv", sep = ""), 
+          row.names = F)
 # ================================ END ========================================
 
 
