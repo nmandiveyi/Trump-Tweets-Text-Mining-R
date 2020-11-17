@@ -16,19 +16,12 @@
 
 user_get_years <- function(){
   # Here, prompt the user to give the year, we want the analysis to begin from
-  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2014")$res)
+  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2013", gui = .GUI)$res)
   # make a vector containing the years as intergers
   years <- seq(year, 
                as.integer(format(Sys.Date(), "%Y")))
   return(years)
 }
-
-#==============================================================================
-# Define a function that returns a vector containing urls of interest
-
-# make a vector containing the links for data for each yeari in the vector 
-# years
-
 
 #==============================================================================
 get_multiple <- function(years_lst){
@@ -45,7 +38,7 @@ get_multiple <- function(years_lst){
     }
     return(url_list)
   }
-  # Get the list of urls
+  # Get the list of urls using the list of years
   url_list = make_url(years_lst)
   # Return a list of data frames from each year
   big_data <- lapply(url_list, get_web_data) 
@@ -81,7 +74,7 @@ get_web_data <- function(proj_url){
 clean_data0 <- function(input_data){
   # Check if input_data is a list. If so, combine it into a data frame
   if (is.list(input_data)){
-    dt <- lapply(input_data, tibble::as.tibble)
+    dt <- lapply(input_data, tibble::as_tibble)
     dt <- rbind.fill(dt)
   }
   return(dt)
@@ -95,8 +88,12 @@ clean_data1 <- function(data){
   clean_df = data.frame(year, text) 
   
   clean_df = clean_df %>%
+    # Replace the string with a time stamp of the tweet
     dplyr::mutate(
+      # Create a new variable that will give and index to every tweet
       tweet_number = row_number(),
+      # This took me so much time to figure out. I did not know that string 
+      # manipulation in R was something else. I'll learn how to use regex in R
       year = as.integer(substring(year, 26)))
   
   return(clean_df)

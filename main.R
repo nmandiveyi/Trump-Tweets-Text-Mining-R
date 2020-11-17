@@ -30,10 +30,11 @@ working_dir <- getwd()
 # =============================================================================
 #                                /LIBRARIES/
 
-# Install the important packages
+# Install the important packages if not already installed
 # The required packages
 Packages <- c("rtweet", "tidytext", "stringr", "textdata", "dplyr", "tidyr", 
-              "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr", "wordcloud")
+              "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr", "wordcloud", 
+              "scales", "topicmodels", "reshape2")
 
 # install if not already installed
 if (any(!Packages %in% installed.packages())) {
@@ -43,7 +44,7 @@ if (any(!Packages %in% installed.packages())) {
 
 # Load the packages to our current workspace
 pacman::p_load(rtweet, tidytext, stringr, textdata, dplyr, tidyr, ggplot2,
-               jsonlite, svDialogs, plyr, wordcloud)
+               jsonlite, svDialogs, plyr, wordcloud, scales, topicmodels, reshape2)
 
 # =============================================================================
 #                            /FOLDER MANAGMENT/
@@ -88,53 +89,28 @@ raw_raw <- get_multiple(years_list)
 
 # Now combine the list of data frames into one
 raw_data <- clean_data0(raw_raw)
+  
 
 # Save this into the raw folder. We won't use this file at all in the analysis,
 # but it will help the user get what's going on,
 write.csv(raw_data, paste(raw_dir,"Trump_twitter_raw.csv", sep = ""), 
           row.names = F)
 
-# Now we convert into tidy text form. This concept is similar to tidy data.
-# The idea is we want (1) words in rows[we could also have sentences or n-grams]
-# (2) we want to remove stop words: these are words like "the", "to", "a" that 
-# don't really add much to our text. We will use tidytext, dplyr, tidyr for this
-# special cleaning process. We have already loaded these.
+# =============================================================================
+#                        /RUN SCRIPTS OTHER SCRIPTS/
+# This is the script that contains the all the data manipulation. Refer 
+# to data_manipulation.R in the R folder.
+source("R/data_manipulation.R")
 
-# First let's extract only the text.
-just_txt <- clean_data1(raw_data)
+#This is the script that does all the analysis with the clean data
+# Refer to the R folder
+source("R/analysis.R")
 
-# Get the stop words data frame into the work space
-data(stop_words)
-
-# Get another list of stop words specific to this analysis
-specific_stopwords <- read.csv(paste(raw_dir, "specific_stopwords.csv", sep = ""))
-
-# Convert to tidy text: one word-per-row
-tidy_txt <- just_txt %>%
-  # there is a column called text in tidy_txt
-  unnest_tokens(word, text) %>%
-  # Now remove the stop words
-  anti_join(stop_words) %>%
-  #Now remove the specific stop words
-  anti_join(specific_stopwords)
-
-# Get the count of each word
-freq_data <- tidy_txt %>%
-  dplyr::count(word, sort = T)
-
-# Sentiment Analysis
-
-# Get the bing sentiment lexicon into the work space
-sent <- get_sentiments("bing")
-
-tidy_txt_sentiment <- tidy_txt %>%
-  inner_join(sent) %>%
-  count(sentiment) %>%
-  spread(word, sentiment, n, fill = 0) %>%
-  mutate(sentiment = positive - negative)
+# This is the script that contains the all the data visualization. Refer 
+# to visualization.R in the R folder.
+source("R/visualization.R", echo = T, print.eval = T)
 
 # ================================ END ========================================
-
 
 
 
