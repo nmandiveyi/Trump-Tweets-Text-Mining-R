@@ -16,7 +16,7 @@
 
 user_get_years <- function(){
   # Here, prompt the user to give the year, we want the analysis to begin from
-  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2014")$res)
+  year <- as.integer(dlgInput("Enter the year you wish analysis to start:", "2013")$res)
   # make a vector containing the years as intergers
   years <- seq(year, 
                as.integer(format(Sys.Date(), "%Y")))
@@ -95,8 +95,12 @@ clean_data1 <- function(data){
   clean_df = data.frame(year, text) 
   
   clean_df = clean_df %>%
+    # Replace the string with a time stamp of the tweet
     dplyr::mutate(
+      # Create a new variable that will give and index to every tweet
       tweet_number = row_number(),
+      # This took me so much time to figure out. I did not know that string 
+      # manipulation in R was something else. I'll learn how to use regex in R
       year = as.integer(substring(year, 26)))
   
   return(clean_df)

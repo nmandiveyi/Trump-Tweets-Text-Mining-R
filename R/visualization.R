@@ -15,26 +15,43 @@
 
 # Set up a graphical device to plot the graph as a pdf
 
-pdf(file = paste(results_dir,"most_used.pdf", sep = ""), width = 10, height = 6, title = "Word count in book")
+pdf(file = paste(results_dir,"most_used.pdf", sep = ""), width = 10, height = 6)
 
 freq_data %>%
   filter(n > 1000) %>%
   mutate(word = reorder(word, n)) %>%
-  ggplot(aes(word, n)) +
-  geom_col() +
-  labs(x = NULL, y = "Count", title = "Most used words in Trump'S tweets (2014-2020)")
+  ggplot(aes(n, word)) +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, NA)) +
+  geom_col(fill = "paleturquoise2", color = "black") +
+  labs(x = "Count", y = NULL, 
+       title = "Most used words in Trump's tweets (2014-2020)") +
+  theme_light()
 
 dev.off()
 
-pdf(file = paste(results_dir,"word_cloud.pdf", sep = ""), width = 10, height = 10, title = "Word count in book")
+#==============================================================================
+#                              /PLOT A WORD CLOUD/
+pdf(file = paste(results_dir,"word_cloud.pdf", sep = ""), width = 10, height = 10,
+    title = "Word count in book")
 
 # Plot a word cloud for tidy text
-
 freq_data %>% 
-  with(wordcloud(word, n, max.words = 1000))
+  with(wordcloud(word, n, max.words = 500, colors = "paleturquoise4"))
 
 dev.off()
 
+#==============================================================================
+#                     /SENTIMENT ANALYSIS VISUALIZATION/
 # Sentiment Analysis
+pdf(file = paste(results_dir,"sentiment_analysis.pdf", sep = ""), width = 8.5, 
+    height = 11, title = "Word count in book")
+
+ggplot(tidy_text_sentiments, aes(index, sentiment, fill = year)) +
+  geom_col(color = c("paleturquoise4"), fill = c("paleturquoise4"),
+           show.legend = FALSE) +
+  facet_wrap(~year, ncol = 2, scales = "free_x") +
+  theme_light()
+
+dev.off()
 
 
