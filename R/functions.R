@@ -10,6 +10,7 @@
 # Define all the new functions for the project
 
 #==============================================================================
+#                            /user_get_years/
 # Define a function that creates a list of years from a given year to date. For
 # example, if the given year is 2015, and the current year is 2020, the function
 # should return the vector c(2015, 2016, 2017, 2018, 2019, 2020)
@@ -24,6 +25,7 @@ user_get_years <- function(){
 }
 
 #==============================================================================
+#                              /get_multiple/
 get_multiple <- function(years_lst){
   # define a function that returns a list of urls to the data we want
   make_url <- function(years){
@@ -46,6 +48,7 @@ get_multiple <- function(years_lst){
 }
 
 #==============================================================================
+#                                /get_web_data/
 # Define a function that fetches data from a website given the url
 get_web_data <- function(proj_url){
   # Download the data as a .json file
@@ -58,7 +61,7 @@ get_web_data <- function(proj_url){
 }
 
 #==============================================================================
-
+#                               /clean_data0/
 # Define a function that collects more data for more that one year. This 
 # function Will build on get_web_data above. 
 
@@ -79,6 +82,13 @@ clean_data0 <- function(input_data){
   }
   return(dt)
 }
+
+#==============================================================================
+#                               /clean_data1/
+# Define a function that further cleans the data
+# removes unnecessary columns
+# add the variable index to be able to keep track of tweets when plotting
+# extract the year as an integer from the time stamp data
 clean_data1 <- function(data){
   # extract the text from data
   text = data$text
@@ -87,6 +97,7 @@ clean_data1 <- function(data){
   #make a new data frame containing only these two column
   clean_df = data.frame(year, text) 
   
+  # Add tweet_number and year
   clean_df = clean_df %>%
     # Replace the string with a time stamp of the tweet
     dplyr::mutate(

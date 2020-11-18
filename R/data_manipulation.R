@@ -80,7 +80,9 @@ pre_data$year <- "2013-2016"
 post_data$year <- "2017-2020"
 
 # Tidy the data: unnest tokens and remove stop words
+# unnest tokens means separate the words
 # pre data
+# convert to tidy form
 tidy_pre_data <- pre_data %>%
   unnest_tokens(word, text) %>%
   anti_join(stop_words) %>%
@@ -88,6 +90,7 @@ tidy_pre_data <- pre_data %>%
 
 
 # post data
+# convert to tidy form
 tidy_post_data <- post_data %>%
   unnest_tokens(word, text) %>%
   anti_join(stop_words) %>%
@@ -96,6 +99,10 @@ tidy_post_data <- post_data %>%
 
 # Combine the data into one data frame for us to use ggplot to compare
 # to follow the steps after this, go to visualization.R
+# define a new variables: proportion the proportion of the frequency
+# of a word to the sum of all frequencies
+# redefine year, replace the integers with the strings 2013-2016 and
+# 2017-2020
 pre_post_freq <- bind_rows(mutate(tidy_pre_data, year = "2013-2016"),
                            mutate(tidy_post_data, year = "2017-2020")) %>% 
   mutate(word = str_extract(word, "[a-z']+")) %>%

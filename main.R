@@ -19,19 +19,43 @@
 #
 # =============================================================================
 #                                   /NOTES/
+# This program downloads large files of data. To facilitate smooth running of
+# every piece, all scripts are run at once here in main.R
 #
+# Folder Structure
+# The folder names are self explanatory. Open them for more information.
+# Main Project folder
+#         main.R
+#         R
+#             data_manipulation.R
+#             functions.R
+#             visualization.R
+#             analysis.R
+#         1.Raw Data
+#             Trump_twitter_raw.csv
+#         2.Clean Data
+#             just_txt.csv
+#             pre_post_freq.csv
+#         3.Data Visualization
+#             prepost_comparison.pdf
+#             models.pdf
+#             sentiment_analysis.pdf
+#             most_used.pdf
+#             word_cloud.pdf
 #
+# You will be prompted to enter a a year you want the analysis to start,
+# please press enter if you are okay with the default value of 2013
+# Otherwise, enter the year you wish the analysis to start
 #
 # =============================================================================
 #                             /GLOBAL VARIABLES/
-
+# Define the main directory so that all programs can access it.
 working_dir <- getwd() 
-
 # =============================================================================
 #                                /LIBRARIES/
 
 # Install the important packages if not already installed
-# The required packages
+# The required packages, they are actually all required
 Packages <- c("rtweet", "tidytext", "stringr", "textdata", "dplyr", "tidyr", 
               "ggplot2", "pacman", "jsonlite", "svDialogs", "plyr", "wordcloud", 
               "scales", "topicmodels", "reshape2")
@@ -42,7 +66,7 @@ if (any(!Packages %in% installed.packages())) {
 }
 
 
-# Load the packages to our current workspace
+# Load the packages to our current work space
 pacman::p_load(rtweet, tidytext, stringr, textdata, dplyr, tidyr, ggplot2,
                jsonlite, svDialogs, plyr, wordcloud, scales, topicmodels, reshape2)
 
@@ -52,7 +76,7 @@ pacman::p_load(rtweet, tidytext, stringr, textdata, dplyr, tidyr, ggplot2,
 # Set up the structure of the project. We will have three folders:
 # Raw_data, Clean_data, and Data_Visualizatio. The names are 
 # self-explanatory. 
-folders_vector <- c("Raw_Data","Clean_Data", "Data_Visualization")
+folders_vector <- c("1.Raw Data","2.Clean Data", "3.Data Visualization")
 
 # Make the folders in the folder_vector if they do not already exist
 for(i in 1:length(folders_vector)){ 
@@ -108,7 +132,7 @@ source("R/analysis.R")
 
 # This is the script that contains the all the data visualization. Refer 
 # to visualization.R in the R folder.
-source("R/visualization.R", echo = T, print.eval = T)
+source("R/visualization.R")
 
 # ================================ END ========================================
 
