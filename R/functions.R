@@ -1,11 +1,3 @@
-###############################################################################
-#                                                                             #
-#                           Ngonidzashe Mandiveyi                             #
-#                           Data Analysis Using R                             #
-#                              Final Project                                  #
-#                              /Functions/                                    #
-#                                                                             #
-###############################################################################
 # functions.R
 # Define all the new functions for the project
 

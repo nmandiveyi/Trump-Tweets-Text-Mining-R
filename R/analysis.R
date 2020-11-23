@@ -1,11 +1,3 @@
-###############################################################################
-#                                                                             #
-#                           Ngonidzashe Mandiveyi                             #
-#                           Data Analysis Using R                             #
-#                              Final Project                                  #
-#                               /Analysis/                                    #
-#                                                                             #
-###############################################################################
 # analysis.R
 
 # This is the script where all the analysis happens. First, I test the pre and

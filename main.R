@@ -1,11 +1,3 @@
-###############################################################################
-#                                                                             #
-#                           Ngonidzashe Mandiveyi                             #
-#                           Data Analysis Using R                             #
-#                              Final Project                                  #
-#                                 /Main/                                      #
-#                                                                             #
-###############################################################################
 # main.R
 
 # This is the main script for my project. The project is analyzes text from 

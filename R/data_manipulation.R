@@ -1,11 +1,3 @@
-###############################################################################
-#                                                                             #
-#                           Ngonidzashe Mandiveyi                             #
-#                           Data Analysis Using R                             #
-#                              Final Project                                  #
-#                           /Data Manipulation/                               #
-#                                                                             #
-###############################################################################
 # data_manipulation.R
 
 # Now we convert into tidy text form. This concept is similar to tidy data.
